@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -16,10 +17,11 @@ dotenv.config();
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ['dist/**/*.entity{.js, .ts'],
+      entities: ['dist/**/*.entity{.js, .ts}'],
       synchronize: true,
       retryAttempts: 5,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
