@@ -4,7 +4,7 @@ import { from, Observable } from 'rxjs';
 import { CreateUserDTO } from 'src/user/models/createUser.dto';
 import { UpdateUserDTO } from 'src/user/models/updateUser.dto';
 import { UserEntity } from 'src/user/models/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -38,6 +38,9 @@ export class UserService {
     const user = await this.userDB.findOneBy({ id });
     const upUser = await this.userDB.save({ ...user, ...dto });
 
+    // Alternative avec update
+    //! Le résultat devient UpdateResult au lieu de Partial<Entity>
+    // const upUser = await this.userDB.update({ id }, { ...dto });
     return upUser;
   }
 
