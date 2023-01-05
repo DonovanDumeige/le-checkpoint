@@ -1,27 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { from, Observable } from 'rxjs';
-import { CreateUserDTO } from 'src/user/models/createUser.dto';
 import { UpdateUserDTO } from 'src/user/models/updateUser.dto';
 import { UserEntity } from 'src/user/models/user.entity';
 import { Repository, UpdateResult } from 'typeorm';
-
+import * as argon from 'argon2';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity) private userDB: Repository<UserEntity>,
   ) {}
-
-  async create(dto: CreateUserDTO): Promise<UserEntity> {
-    const user = this.userDB.create(dto);
-    try {
-      await this.userDB.save(user);
-    } catch (e) {
-      throw new ConflictException('username already exist');
-    }
-
-    return user;
-  }
 
   async findOne(id: number): Promise<UserEntity> {
     return await this.userDB.findOneBy({ id });
@@ -36,12 +23,14 @@ export class UserService {
     dto: UpdateUserDTO,
   ): Promise<Partial<UserEntity>> {
     const user = await this.userDB.findOneBy({ id });
-    const upUser = await this.userDB.save({ ...user, ...dto });
+    const hash = await argon.hash(dto.password);
+    const upUser = await this.userDB.save({ ...user, ...dto, password: hash });
 
     // Alternative avec update
     //! Le résultat devient UpdateResult au lieu de Partial<Entity>
     // const upUser = await this.userDB.update({ id }, { ...dto });
-    return upUser;
+    const { password, ...result } = upUser;
+    return result;
   }
 
   async deleteUser(id: number): Promise<string> {
