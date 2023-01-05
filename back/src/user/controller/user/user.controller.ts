@@ -8,7 +8,6 @@ import {
   ParseIntPipe,
   Put,
 } from '@nestjs/common';
-import { CreateUserDTO } from 'src/user/models/createUser.dto';
 import { UpdateUserDTO } from 'src/user/models/updateUser.dto';
 import { UserEntity } from 'src/user/models/user.entity';
 import { UserService } from 'src/user/service/user/user.service';
@@ -16,11 +15,6 @@ import { UserService } from 'src/user/service/user/user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-
-  @Post()
-  create(@Body() user: CreateUserDTO): Promise<UserEntity> {
-    return this.userService.create(user);
-  }
 
   @Get()
   findAll(): Promise<UserEntity[]> {
