@@ -1,6 +1,5 @@
 import {
   Controller,
-  Post,
   Body,
   Get,
   Delete,
@@ -8,11 +7,12 @@ import {
   ParseIntPipe,
   Put,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { HasRoles, User } from 'src/assets/decorator';
 import { UserEntity } from 'src/assets/entities';
 import { JwtAuthGuard, RolesGuard } from 'src/assets/guard';
-import { Role, UpdateUserDTO } from 'src/assets/models';
+import { Role, RoleUserDTO, UpdateUserDTO } from 'src/assets/models';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -28,22 +28,14 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.userService.findOne(id);
   }
 
-  @HasRoles(Role.ADMIN || Role.USER)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Put(':id')
-  updateOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() user: UpdateUserDTO,
-  ): Promise<Partial<UserEntity>> {
-    return this.userService.updateUser(id, user);
-  }
-
-  @HasRoles(Role.ADMIN || Role.USER)
+  @HasRoles(Role.USER, Role.EDITOR, Role.CHIEFEDITOR, Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   deleteOne(
@@ -51,5 +43,26 @@ export class UserController {
     @User() user,
   ): Promise<string> {
     return this.userService.deleteUser(id, user);
+  }
+
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Patch(':id/role')
+  updateRoleUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() role: RoleUserDTO,
+  ): Promise<{ id: number; role: Role }> {
+    return this.userService.updateRoleUser(id, role);
+  }
+
+  @HasRoles(Role.USER, Role.EDITOR, Role.CHIEFEDITOR, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Put(':id')
+  updateOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateUserDTO,
+    @User() user,
+  ): Promise<Partial<UserEntity>> {
+    return this.userService.updateUser(id, user, dto);
   }
 }

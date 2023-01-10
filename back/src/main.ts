@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   await app.listen(config.get('APP_PORT'));
 }
 bootstrap();

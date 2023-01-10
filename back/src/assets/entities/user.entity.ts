@@ -20,5 +20,5 @@ export class UserEntity {
   password: string;
 
   @Column({ type: 'enum', enum: Role, default: Role.USER })
-  role: string;
+  role: Role;
 }

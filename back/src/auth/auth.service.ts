@@ -5,11 +5,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDTO } from 'src/assets/models/createUser.dto';
-import { UserEntity } from 'src/user/models/user.entity';
+import { CreateUserDTO, LoginDTO } from 'src/assets/models/';
+import { UserEntity } from 'src/assets/entities';
 import { Repository } from 'typeorm';
 import * as argon from 'argon2';
-import { LoginDTO } from 'src/assets/models/Login.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,9 +21,6 @@ export class AuthService {
     const email = await this.userDB.findOneBy({ email: dto.email });
     if (email) throw new ConflictException('email or username already exist');
 
-    if (dto.role) {
-      dto.role = dto.role.toLowerCase();
-    }
     const hash = await argon.hash(dto.password);
     const user = this.userDB.create({ ...dto, password: hash });
     user.email = user.email.toLowerCase();
@@ -37,8 +33,6 @@ export class AuthService {
     }
     return {
       id: user.id,
-      username: user.username,
-      email: user.email,
       role: user.role,
     };
   }
