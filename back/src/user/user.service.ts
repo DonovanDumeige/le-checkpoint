@@ -5,6 +5,11 @@ import { Repository } from 'typeorm';
 import * as argon from 'argon2';
 import { UserEntity } from 'src/assets/entities';
 import { Role, RoleUserDTO, UpdateUserDTO } from 'src/assets/models';
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class UserService {
@@ -85,5 +90,19 @@ export class UserService {
 
   isOwnerOrAdmin(objet: any, user: any): boolean {
     return user.role === Role.ADMIN || (objet && objet.id === user.id);
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<UserEntity>> {
+    const queryBuilder = await this.userDB
+      .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.name',
+        'user.username',
+        'user.email',
+        'user.role',
+      ]);
+    queryBuilder.orderBy('user.username', 'ASC');
+    return paginate<UserEntity>(queryBuilder, options);
   }
 }
