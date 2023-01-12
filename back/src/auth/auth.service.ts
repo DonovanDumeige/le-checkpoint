@@ -21,6 +21,8 @@ export class AuthService {
     const email = await this.userDB.findOneBy({ email: dto.email });
     if (email) throw new ConflictException('email or username already exist');
 
+    if (dto.password !== dto.passwordConfirm)
+      throw new ConflictException('use the same password');
     const hash = await argon.hash(dto.password);
     const user = this.userDB.create({ ...dto, password: hash });
     user.email = user.email.toLowerCase();
