@@ -30,6 +30,7 @@
   </div>
 </form>
 
+
 <h3 *ngIf="!registerForm.valid"> Forms contains following errors</h3>
 <p *ngIf="registerForm.get('password')?.hasError('passwordInvalid')"> Le mot de passe doit contenir un nombre</p>
 <p *ngIf="registerForm.hasError('passwordNotMatching')"> Les mots de passe ne correspondent pas.</p>

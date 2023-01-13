@@ -6,6 +6,18 @@
   flex: 1 1 auto;
 }
 
-a {
+a{
   padding : 0 10px;
+}
+
+button {
+  margin :0 10px;
+}
+
+.mat-mdc-select-placeholder {
+  font-size: 8px;
+}
+
+.test {
+  background-color: transparent;
 }
