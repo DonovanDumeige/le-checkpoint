@@ -1,15 +1,22 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import * as argon from 'argon2';
 import { UserEntity } from 'src/assets/entities';
-import { Role, RoleUserDTO, UpdateUserDTO } from 'src/assets/models';
+import {
+  CreateUserDTO,
+  Role,
+  RoleUserDTO,
+  UpdateUserDTO,
+  UserInterface,
+} from 'src/assets/models';
 import {
   IPaginationOptions,
   Pagination,
   paginate,
 } from 'nestjs-typeorm-paginate';
+import { from, map, Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -92,17 +99,54 @@ export class UserService {
     return user.role === Role.ADMIN || (objet && objet.id === user.id);
   }
 
-  async paginate(options: IPaginationOptions): Promise<Pagination<UserEntity>> {
-    const queryBuilder = await this.userDB
-      .createQueryBuilder('user')
-      .select([
-        'user.id',
-        'user.name',
-        'user.username',
-        'user.email',
-        'user.role',
-      ]);
-    queryBuilder.orderBy('user.username', 'ASC');
-    return paginate<UserEntity>(queryBuilder, options);
+  paginate(options: IPaginationOptions): Observable<Pagination<UserInterface>> {
+    return from(paginate<UserInterface>(this.userDB, options)).pipe(
+      map((usersPageable: Pagination<UserInterface>) => {
+        usersPageable.items.forEach(function (v) {
+          delete v.password;
+        });
+        return usersPageable;
+      }),
+    );
+  }
+  paginateFilterByUsername(
+    options: IPaginationOptions,
+    user: UserInterface,
+  ): Observable<Pagination<UserInterface>> {
+    return from(
+      this.userDB.findAndCount({
+        skip: 0,
+        take: Number(options.limit) || 10,
+        order: { id: 'ASC' },
+        select: ['id', 'name', 'username', 'email', 'role'],
+        where: [{ username: Like(`%${user.username}%`) }],
+      }),
+    ).pipe(
+      map(([users, totalUsers]) => {
+        const usersPageable: Pagination<UserInterface> = {
+          items: users,
+          links: {
+            first: options.route + `?limit=${options.limit}`,
+            previous: options.route + ``,
+            next:
+              options.route +
+              `?limit=${options.limit}&page=${Number(options.page) + 1}`,
+            last:
+              options.route +
+              `?limit=${options.limit}&page=${Math.ceil(
+                totalUsers / Number(options.limit),
+              )}`,
+          },
+          meta: {
+            currentPage: Number(options.page),
+            itemCount: users.length,
+            itemsPerPage: Number(options.limit),
+            totalItems: totalUsers,
+            totalPages: Math.ceil(totalUsers / Number(options.limit)),
+          },
+        };
+        return usersPageable;
+      }),
+    );
   }
 }

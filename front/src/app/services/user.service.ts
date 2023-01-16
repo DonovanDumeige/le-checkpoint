@@ -37,4 +37,18 @@ export class UserService {
         catchError(err => throwError(() => err))
         )
   }
+
+  paginateByName(page: number, size: number, username:string): Observable<UserData> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('limit', String(size));
+    params = params.append('username', username);
+
+    return this.http.get<any>('http://localhost:3000/user/index', {params}).pipe(
+      map((userData: UserData) => userData),
+      catchError(err => throwError(() => err))
+      )
+  }
+
+  //fin classe
 }
