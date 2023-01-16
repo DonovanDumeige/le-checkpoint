@@ -1,14 +1,16 @@
-<mat-toolbar color="primary">
+
+<mat-toolbar class="toolbar">
     <mat-toolbar-row>
-      <span>Third Line</span>
+      <a class="logo-container" href="/">
+        <img class="logo" src="../assets/img/Icone-site-2.png" alt="logo checkpoint">
+        <span>Le checkpoint blog </span>
+      </a>
       <span class="example-spacer"></span>
       <button mat-flat-button routerLink="users">Users</button>
       <button mat-flat-button routerLink="admin">Admin</button>
 
-
-      <mat-form-field class="test" style="margin-left:20px;" name="loginRegistrerDropdown">
-
-        <mat-select  placeholder="Login" (selectionChange)="navigateTo($event.value)">
+      <mat-form-field class="form-field" name="loginRegistrerDropdown">
+        <mat-select placeholder="Login" (selectionChange)="navigateTo($event.value)">
           <mat-option *ngFor="let entry of entries" [value]="entry.link">
             {{entry.name}}
 

@@ -19,5 +19,57 @@ button {
 }
 
 .test {
+  background-color: blue;
+}
+
+.toolbar{
+  background-color: black;
+  color: goldenrod;
+}
+
+.form-field{
+  margin-top: 1.4rem;
+  margin-left: 1.5rem;
+  height: 65px;
   background-color: transparent;
+}
+
+.mat-mdc-text-field--filled:not(.mdc-text-field--disabled){
+  color: white;
+  background-color: transparent;
+}
+header {
+  background-color: black;
+  width:100%;
+  display: flex;
+  height: 35vh;
+
+}
+header .img-container{
+  width:50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-image: url(../assets/img/Checkpoint-image-principale_header-2.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+header .img-container .banner{
+  width: 100%;
+}
+
+.logo-container{
+  text-decoration: none;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  color: goldenrod
+}
+
+.logo{
+  width: 3.5vw;
+  height: auto;
 }

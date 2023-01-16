@@ -10,9 +10,11 @@ import { UserData, UserService } from 'src/app/services/user.service';
 })
 export class UsersComponent implements OnInit {
 
+  filterValue: string = '';
   dataSource!: UserData;
   pageEvent!: PageEvent;
   displayedColums: string[] = ['id', 'name', 'email', 'username', 'role']
+row: any;
 
   constructor( private userService: UserService) {}
 
@@ -22,14 +24,12 @@ export class UsersComponent implements OnInit {
 
   initDataSource() {
     this.userService.findAll(1,10).pipe(
-      tap(users => console.log(users)),
       map((userData: UserData) => this.dataSource = userData)
     ).subscribe();
   }
 
   onPaginateChange(event: PageEvent){
     let page = event.pageIndex;
-
     let size = event.pageSize;
 
     page = page+1;
@@ -38,5 +38,11 @@ export class UsersComponent implements OnInit {
     this.userService.findAll(page, size).pipe(
       map((userData: UserData) => this.dataSource = userData)
     ).subscribe();
+  }
+
+  findByName(username: string) {
+    this.userService.paginateByName(0, 10, username).pipe(
+      map((userData: UserData) => this.dataSource = userData)
+    ).subscribe()
   }
 }

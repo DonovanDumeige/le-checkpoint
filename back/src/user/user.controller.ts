@@ -13,10 +13,17 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { Observable } from 'rxjs';
 import { HasRoles, User } from 'src/assets/decorator';
 import { UserEntity } from 'src/assets/entities';
 import { JwtAuthGuard, RolesGuard } from 'src/assets/guard';
-import { Role, RoleUserDTO, UpdateUserDTO } from 'src/assets/models';
+import {
+  CreateUserDTO,
+  Role,
+  RoleUserDTO,
+  UpdateUserDTO,
+  UserInterface,
+} from 'src/assets/models';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -38,14 +45,28 @@ export class UserController {
   @Get('index')
   index(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-  ): Promise<Pagination<UserEntity>> {
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query('username') username: string,
+  ): Observable<Pagination<UserInterface>> {
     limit = limit > 100 ? 100 : limit;
-    return this.userService.paginate({
-      page,
-      limit,
-      route: `http://localhost:${this.config.get('APP_PORT')}/user/index`,
-    });
+    console.log(username);
+
+    if (username === null || username === undefined) {
+      return this.userService.paginate({
+        page: Number(page),
+        limit: Number(limit),
+        route: `http://localhost:${this.config.get('APP_PORT')}/user/index`,
+      });
+    } else {
+      return this.userService.paginateFilterByUsername(
+        {
+          page: Number(page),
+          limit: Number(limit),
+          route: `http://localhost:${this.config.get('APP_PORT')}/user/index`,
+        },
+        { username },
+      );
+    }
   }
 
   @HasRoles(Role.ADMIN)

@@ -6,3 +6,5 @@ export * from './dto/roleUser.dto';
 
 //Enum
 export * from './enum/role.enum';
+
+export * from './interface/user.interface';
