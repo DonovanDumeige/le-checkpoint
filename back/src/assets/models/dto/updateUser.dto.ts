@@ -16,4 +16,6 @@ export class UpdateUserDTO {
   @IsString()
   @IsOptional()
   password: string;
+
+  profileImage: string;
 }

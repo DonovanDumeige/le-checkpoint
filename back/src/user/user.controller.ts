@@ -10,8 +10,14 @@ import {
   Patch,
   Query,
   DefaultValuePipe,
+  UseInterceptors,
+  Post,
+  UploadedFile,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Observable } from 'rxjs';
 import { HasRoles, User } from 'src/assets/decorator';
@@ -25,6 +31,25 @@ import {
   UserInterface,
 } from 'src/assets/models';
 import { UserService } from './user.service';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path = require('path');
+import { join } from 'path';
+
+export const storage = {
+  storage: diskStorage({
+    destination: './uploads/avatars',
+    filename: (req, file, cb) => {
+      const filename: string =
+        // Take the orignal name of the file and delete white space if it has some
+        // and generate an uuid at the end of the file.
+        path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+      const extension: string = path.parse(file.originalname).ext;
+
+      cb(null, `${filename}${extension}`);
+    },
+  }),
+};
 
 @Controller('user')
 export class UserController {
@@ -105,5 +130,27 @@ export class UserController {
     @User() user,
   ): Promise<Partial<UserEntity>> {
     return this.userService.updateUser(id, user, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file', storage))
+  async uploadFile(
+    @UploadedFile() file,
+    @Req() req,
+    @Body() dto: UpdateUserDTO,
+  ): Promise<Partial<UserEntity>> {
+    const user = req.user;
+    const upUser = await this.userService.updateUser(user.id, user, dto);
+    upUser.profileImage = file.filename;
+
+    return upUser;
+  }
+
+  // using object response to get profile image from uploads folder.
+  @Get('profile-image/:imagename')
+  findProfileImage(@Param('imagename') imagename: string, @Res() res) {
+    console.log(res);
+    return res.sendFile(join(process.cwd(), 'uploads/avatars/' + imagename));
   }
 }

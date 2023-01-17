@@ -60,7 +60,9 @@ header .img-container{
 header .img-container .banner{
   width: 100%;
 }
-
+.toolbar{
+  background-color: #8e3a22;
+}
 .logo-container{
   text-decoration: none;
   display: inline-flex;
@@ -70,6 +72,6 @@ header .img-container .banner{
 }
 
 .logo{
-  width: 3.5vw;
+  width: 20vw;
   height: auto;
 }
