@@ -19,6 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // add an user object to the request object if an user is authentified.
   async validate(payload: any) {
     const user = await this.userDB.findOneBy({ username: payload.username });
     if (user) {

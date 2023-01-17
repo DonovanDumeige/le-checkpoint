@@ -34,8 +34,7 @@ export class AuthentificationService {
     username: loginForm.username,
     password:loginForm.password}).pipe(
       map((token) => {
-        console.log(token.access_token);
-        localStorage.setItem('blog-token', token.access_token);
+        localStorage.setItem('access_token', token.access_token);
         return token;
       })
     );

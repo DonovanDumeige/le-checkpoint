@@ -17,15 +17,17 @@
       <mat-cell *matCellDef="let row"> {{ row.id}} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.username}} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{ row.name}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{ row.username}} </mat-cell>
-    </ng-container>
+
 
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Mail</mat-header-cell>
@@ -33,7 +35,7 @@
     </ng-container>
 
     <ng-container matColumnDef="role">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>role</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{ row.role}} </mat-cell>
     </ng-container>
   </mat-table>

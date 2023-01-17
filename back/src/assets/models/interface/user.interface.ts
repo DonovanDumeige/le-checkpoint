@@ -7,4 +7,5 @@ export interface UserInterface {
   email?: string;
   password?: string;
   role?: Role;
+  profileImage?: string;
 }
