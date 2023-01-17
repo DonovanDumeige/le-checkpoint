@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Like, Repository } from 'typeorm';
@@ -27,6 +31,7 @@ export class UserService {
   async findOne(id: number): Promise<UserEntity> {
     const user = await this.userDB.findOneBy({ id });
     delete user.password;
+    delete user.profileImage;
     return user;
   }
 
@@ -34,6 +39,7 @@ export class UserService {
     const users = await this.userDB.find();
     users.forEach((user) => {
       delete user.password;
+      delete user.profileImage;
     });
 
     return users;
@@ -45,9 +51,20 @@ export class UserService {
     dto: UpdateUserDTO,
   ): Promise<Partial<UserEntity>> {
     let hash;
+
+    const username = await this.userDB.findOneBy({ username: dto.username });
+    const email = await this.userDB.findOneBy({ email: dto.email });
     const findUser = await this.userDB.findOneBy({ id });
     if (dto.password) {
       hash = await argon.hash(dto.password);
+    }
+
+    if (dto.email && dto.email === email.email) {
+      throw new ConflictException('Email déjà enregistré.');
+    }
+
+    if (dto.username && dto.username === username.username) {
+      throw new ConflictException('Ce nom est déjà pris.');
     }
 
     if (this.isOwnerOrAdmin(findUser, user)) {
@@ -60,10 +77,10 @@ export class UserService {
       // Alternative avec update
       //! Le résultat devient UpdateResult au lieu de Partial<Entity>
       // const upUser = await this.userDB.update({ id }, { ...dto });
-      const { password, role, ...result } = upUser;
+      const { password, role, profileImage, ...result } = upUser;
       return result;
     } else {
-      throw new ForbiddenException('acces unauthorized');
+      throw new ForbiddenException('Accès interdit.Persission non accordée.');
     }
   }
 
@@ -73,7 +90,7 @@ export class UserService {
       await this.userDB.delete(id);
       return `User n°${id} deleted.`;
     } else {
-      throw new ForbiddenException('acces unauthorized');
+      throw new ForbiddenException('Accès interdit.Persission non accordée.');
     }
   }
 

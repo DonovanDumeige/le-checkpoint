@@ -19,10 +19,12 @@ export class AuthService {
 
   async signin(dto: CreateUserDTO) {
     const email = await this.userDB.findOneBy({ email: dto.email });
-    if (email) throw new ConflictException('email or username already exist');
+    const username = await this.userDB.findOneBy({ username: dto.username });
+    if (email || username)
+      throw new ConflictException("Nom d'utilisateur ou email déjà existant.");
 
     if (dto.password !== dto.passwordConfirm)
-      throw new ConflictException('use the same password');
+      throw new ConflictException('Les mots de passe ne correpondent pas.');
     const hash = await argon.hash(dto.password);
     const user = this.userDB.create({ ...dto, password: hash });
     user.email = user.email.toLowerCase();
@@ -31,7 +33,7 @@ export class AuthService {
       await this.userDB.save(user);
       delete user.password;
     } catch (e) {
-      throw new ConflictException('email or username already exist');
+      throw new ConflictException("Nom d'utilisateur ou mail déjà existant.");
     }
     return {
       id: user.id,
@@ -50,13 +52,15 @@ export class AuthService {
       .getOne();
 
     if (!user) {
-      throw new NotFoundException('user does not exist');
+      throw new NotFoundException("L'utilisateur introuvable.");
     }
 
     try {
       const isMatch = await argon.verify(user.password, password);
       if (!isMatch) {
-        throw new ConflictException('username or password incorrect');
+        throw new ConflictException(
+          "Nom d'utilisateur ou mot de passe incorrect.",
+        );
       } else {
         const payload = {
           id: user.id,
