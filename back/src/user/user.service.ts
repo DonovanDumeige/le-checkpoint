@@ -31,7 +31,6 @@ export class UserService {
   async findOne(id: number): Promise<UserEntity> {
     const user = await this.userDB.findOneBy({ id });
     delete user.password;
-    delete user.profileImage;
     return user;
   }
 
@@ -39,7 +38,6 @@ export class UserService {
     const users = await this.userDB.find();
     users.forEach((user) => {
       delete user.password;
-      delete user.profileImage;
     });
 
     return users;
@@ -59,11 +57,11 @@ export class UserService {
       hash = await argon.hash(dto.password);
     }
 
-    if (dto.email && dto.email === email.email) {
+    if (dto.email === email.email) {
       throw new ConflictException('Email déjà enregistré.');
     }
 
-    if (dto.username && dto.username === username.username) {
+    if (dto.username === username.username) {
       throw new ConflictException('Ce nom est déjà pris.');
     }
 
@@ -77,7 +75,7 @@ export class UserService {
       // Alternative avec update
       //! Le résultat devient UpdateResult au lieu de Partial<Entity>
       // const upUser = await this.userDB.update({ id }, { ...dto });
-      const { password, role, profileImage, ...result } = upUser;
+      const { password, role, ...result } = upUser;
       return result;
     } else {
       throw new ForbiddenException('Accès interdit.Persission non accordée.');

@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
-  path: 'admin',
-  loadChildren: () => import('./admin/admin.module').then(m=>m.AdminModule)
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m=>m.AdminModule)
   },
   {
     path: 'login',
@@ -19,7 +20,11 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+  },
+  {
+    path: 'users/:id',
+    component: UserProfileComponent,
   }
 ];
 

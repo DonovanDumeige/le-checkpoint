@@ -28,6 +28,14 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  findOne(id: number): Observable<User> {
+    console.log('test');
+    return this.http.get<any>('http://localhost:3000/user/' + id).pipe(
+      map((user: User) => user)
+    );
+
+
+  }
   findAll(page: number, size: number): Observable<UserData> {
     let params = new HttpParams();
     params = params.append('page', String(page));

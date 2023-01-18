@@ -10,7 +10,7 @@
   <!-- Affiche les users via un tableau -->
   <mat-table [dataSource]="dataSource.items">
     <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColums"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColums" (click)="navigateToProfile(row.id)"></mat-row>
 
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
