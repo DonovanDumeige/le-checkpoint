@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { UserData, UserService } from 'src/app/services/user.service';
 
@@ -14,9 +15,13 @@ export class UsersComponent implements OnInit {
   dataSource!: UserData;
   pageEvent!: PageEvent;
   displayedColums: string[] = ['id', 'name', 'email', 'username', 'role']
-row: any;
+  row: any;
 
-  constructor( private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    ) {}
 
   ngOnInit(): void {
     this.initDataSource();
@@ -33,8 +38,6 @@ row: any;
     let size = event.pageSize;
 
     page = page+1;
-    console.log('page: '+page)
-    console.log('size: '+size);
     this.userService.findAll(page, size).pipe(
       map((userData: UserData) => this.dataSource = userData)
     ).subscribe();
@@ -44,5 +47,9 @@ row: any;
     this.userService.paginateByName(0, 10, username).pipe(
       map((userData: UserData) => this.dataSource = userData)
     ).subscribe()
+  }
+
+  navigateToProfile(id: number) {
+    this.router.navigate(['./' + id], {relativeTo: this.activatedRoute})
   }
 }

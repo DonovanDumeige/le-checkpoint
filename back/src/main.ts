@@ -8,6 +8,7 @@ async function bootstrap() {
 
   const corsOptions = {
     origin: ['http://localhost:4200'],
+    credentials: true,
   };
   app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));

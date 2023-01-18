@@ -58,10 +58,6 @@ export class UserController {
     private readonly config: ConfigService,
   ) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  // Le role et le role guard permet d'autoriser
-  //l'accès à la route à un utilisateur authentifié, si il a le rôle souhaité.
-  @HasRoles(Role.ADMIN)
   @Get()
   findAll(): Promise<UserEntity[]> {
     return this.userService.findAll();
@@ -94,8 +90,6 @@ export class UserController {
     }
   }
 
-  @HasRoles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.userService.findOne(id);
@@ -141,8 +135,8 @@ export class UserController {
     @Body() dto: UpdateUserDTO,
   ): Promise<Partial<UserEntity>> {
     const user = req.user;
+    dto.profileImage = file.filename;
     const upUser = await this.userService.updateUser(user.id, user, dto);
-    upUser.profileImage = file.filename;
 
     return upUser;
   }
