@@ -12,4 +12,8 @@ export class EditArticleDTO {
   @IsString()
   @IsOptional()
   content: string;
+
+  @IsString()
+  @IsOptional()
+  headerImage: string;
 }

@@ -9,7 +9,11 @@ import {
   Post,
   Put,
   Query,
+  Request,
+  Response,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { HasRoles, User } from 'src/assets/decorator';
 import { JwtAuthGuard, RolesGuard } from 'src/assets/guard';
@@ -20,6 +24,8 @@ import { v4 as uuidv4 } from 'uuid';
 import path = require('path');
 import { use } from 'passport';
 import { EditArticleDTO } from 'src/assets/models/dto/blog/editArticle.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { join } from 'path';
 
 export const url = 'http://localhost:3000/blog';
 
@@ -100,5 +106,26 @@ export class BlogController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.blogService.findOnebyID(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/image/upload')
+  @UseInterceptors(FileInterceptor('file', storage))
+  async uploadImage(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file,
+    @User() user,
+    @Body() data: EditArticleDTO,
+  ) {
+    data.headerImage = file.filename;
+    const upArticle = await this.blogService.editArticle(id, data, user);
+    return upArticle;
+  }
+
+  @Get('image/:imagename')
+  findImage(@Param('imagename') imagename, @Response() res) {
+    return res.sendFile(
+      join(process.cwd(), 'uploads/blog-header-images/' + imagename),
+    );
   }
 }
