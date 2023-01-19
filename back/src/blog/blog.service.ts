@@ -21,6 +21,7 @@ export class BlogService {
     private blogDB: Repository<BlogEntity>,
   ) {}
 
+  // CRUD
   async createArticle(data: CreateArticleDTO, user): Promise<BlogEntity> {
     const slug = this.generateSlug(data.title);
     const article = this.blogDB.create({ slug, ...data });
@@ -54,32 +55,13 @@ export class BlogService {
     return allArticles;
   }
 
-  generateSlug(title: string) {
-    return slugify(title);
-  }
-
-  async paginateAll(options: IPaginationOptions) {
-    const query = this.blogDB.createQueryBuilder('articles');
-    query.orderBy('articles.title', 'ASC');
-    return await paginate<BlogEntity>(query, options);
-  }
-  async paginateByAuthor(userID: number, options: IPaginationOptions) {
-    const query = await paginate<BlogEntity>(this.blogDB, options, {
-      relations: ['author'],
-      where: [{ author: { id: userID } }],
-    });
-
-    const items = query.items;
-    items.forEach((item) => delete item.author.password);
-    return query;
-  }
-
   async editArticle(id: number, data: EditArticleDTO, user) {
     let slug;
     const findArticle = await this.findOnebyID(id);
     console.log(findArticle);
+    console.log('Data title :', data.title);
 
-    if (data.title != findArticle.title) {
+    if (data.title && data.title != findArticle.title) {
       slug = this.generateSlug(data.title);
     }
 
@@ -101,6 +83,34 @@ export class BlogService {
       return `L'article n°${id} a bien été supprimé.`;
     }
   }
+
+  // Autres fonctions
+
+  async paginateAll(options: IPaginationOptions) {
+    const query = await paginate<BlogEntity>(this.blogDB, options, {
+      relations: ['author'],
+    });
+
+    const items = query.items;
+    items.sort();
+    items.forEach((article) => this.deleteData(article));
+    return query;
+  }
+  async paginateByAuthor(userID: number, options: IPaginationOptions) {
+    const query = await paginate<BlogEntity>(this.blogDB, options, {
+      relations: ['author'],
+      where: [{ author: { id: userID } }],
+    });
+
+    const items = query.items;
+    items.forEach((item) => this.deleteData(item));
+    return query;
+  }
+
+  generateSlug(title: string) {
+    return slugify(title);
+  }
+
   userIsAuthor(objet: any, user: any): boolean {
     return (
       user.role === Role.CHIEFEDITOR ||

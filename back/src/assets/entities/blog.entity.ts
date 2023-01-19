@@ -16,16 +16,16 @@ export class BlogEntity extends TimeStampEntity {
   @Column({ default: '' })
   description: string;
 
-  @Column({ default: '' })
+  @Column({ type: 'longtext' })
   content: string;
 
   @Column({ default: 0 })
   likes: number;
 
-  @Column({ default: null })
+  @Column({ nullable: true })
   headerImage: string;
 
-  @Column({ default: null })
+  @Column({ nullable: true })
   publishedDate: Date;
 
   @Column({ default: false })
