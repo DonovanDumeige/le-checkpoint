@@ -1,6 +1,7 @@
 import e from 'express';
 import { Role } from 'src/assets/models/enum/role.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BlogEntity } from './blog.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -24,4 +25,7 @@ export class UserEntity {
 
   @Column({ nullable: true })
   profileImage: string;
+
+  @OneToMany(() => BlogEntity, (articles) => articles.author)
+  articles: BlogEntity[];
 }
