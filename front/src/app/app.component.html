@@ -12,7 +12,6 @@
         <mat-select placeholder="Login" (selectionChange)="navigateTo($event.value)">
           <mat-option *ngFor="let entry of entries" [value]="entry.link">
             {{entry.name}}
-
           </mat-option>
         </mat-select>
 
