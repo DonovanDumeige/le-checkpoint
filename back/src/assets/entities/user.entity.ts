@@ -2,7 +2,7 @@ import e from 'express';
 import { Role } from 'src/assets/models/enum/role.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;

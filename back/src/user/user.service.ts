@@ -97,7 +97,6 @@ export class UserService {
     role: RoleUserDTO,
   ): Promise<{ id: number; role: Role }> {
     const user = await this.userDB.findOneOrFail({ where: { id } });
-    console.log('Role: ', role);
     try {
       const upUser = await this.userDB.save({ ...user, ...role });
       return {

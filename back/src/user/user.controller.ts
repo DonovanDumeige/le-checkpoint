@@ -70,7 +70,6 @@ export class UserController {
     @Query('username') username: string,
   ): Observable<Pagination<UserInterface>> {
     limit = limit > 100 ? 100 : limit;
-    console.log(username);
 
     if (username === null || username === undefined) {
       return this.userService.paginate({
@@ -144,7 +143,6 @@ export class UserController {
   // using object response to get profile image from uploads folder.
   @Get('profile-image/:imagename')
   findProfileImage(@Param('imagename') imagename: string, @Res() res) {
-    console.log(res);
     return res.sendFile(join(process.cwd(), 'uploads/avatars/' + imagename));
   }
 }
