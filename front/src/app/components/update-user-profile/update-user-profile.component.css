@@ -13,3 +13,23 @@
   margin-top: 2%;
   margin-left: 10%;
 }
+
+.submitBtn{
+  color: goldenrod;
+  background-color: #8e3a22;
+  width : 10vw;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.upImage{
+  width: 10vw;
+}
+
+li{
+  list-style-type: none;
+}
+
+label{
+  cursor: pointer;
+}

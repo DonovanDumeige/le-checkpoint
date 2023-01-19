@@ -5,8 +5,8 @@ import { catchError, map } from 'rxjs/operators';
 import { User } from './authentification.service';
 
 export interface UserData {
-  items : User[],
-  meta:{
+  items: User[],
+  meta: {
     totalItems: number,
     itemCount: number,
     itemsPerPage: number,
@@ -40,25 +40,33 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('page', String(page));
     params = params.append('limit', String(size))
-      return this.http.get<any>('http://localhost:3000/user/index', {params}).pipe(
-        map((userData: UserData) => userData),
-        catchError(err => throwError(() => err))
-        )
+    return this.http.get<any>('http://localhost:3000/user/index', { params }).pipe(
+      map((userData: UserData) => userData),
+      catchError(err => throwError(() => err))
+    )
   }
 
-  paginateByName(page: number, size: number, username:string): Observable<UserData> {
+  uploadProfileImage(formData: FormData): Observable<any> {
+    return this.http.post<FormData>("http://localhost:3000/user/upload", formData, {
+      reportProgress: true,
+      observe: 'events',
+    }
+    )
+  }
+  paginateByName(page: number, size: number, username: string): Observable<UserData> {
     let params = new HttpParams();
     params = params.append('page', String(page));
     params = params.append('limit', String(size));
     params = params.append('username', username);
 
-    return this.http.get<any>('http://localhost:3000/user/index', {params}).pipe(
+    return this.http.get<any>('http://localhost:3000/user/index', { params }).pipe(
       map((userData: UserData) => userData),
       catchError(err => throwError(() => err))
-      )
+    )
   }
-   updateUser(user: User): Observable<User>{
+  updateUser(user: User): Observable<User> {
     return this.http.put<any>('http://localhost:3000/user/' + user.id, user)
-   }
+  }
+
   //fin classe
 }
