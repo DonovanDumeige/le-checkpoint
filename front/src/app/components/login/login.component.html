@@ -11,6 +11,6 @@
       <mat-hint *ngIf="loginForm.controls['password'].errors">Mot de passe requis</mat-hint>
     </mat-form-field>
 
-    <button mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit">Connexion</button>
+    <button mat-flat-button class="submitBtn" [disabled]="!loginForm.valid" type="submit">Connexion</button>
 </div>
 </form>

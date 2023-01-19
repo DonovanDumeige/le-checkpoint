@@ -1,1 +1,49 @@
-<h1>is authenticated !</h1>
+<form [formGroup]="form" (ngSubmit)="update()">
+  <div>
+    <mat-card class="container">
+
+      <div style="width:25%; margin-bottom: 1rem;">
+
+        <mat-card>
+          <mat-card-content>
+            <img class='upImage' *ngIf="form.get('profileImage')?.value"
+              src="http://localhost:3000/user/profile-image/{{form.get('profileImage')?.value}}">
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+          </mat-card-content>
+
+
+          <mat-card-actions>
+            <label for="upload" (click)="onClick()">Importez votre image: </label>
+            <button mat-button color="warn" (click)="onClick()" name="upload">
+              <mat-icon>cloud-upload</mat-icon>
+            </button>
+          </mat-card-actions>
+          <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept ="image/" style="display:none;">
+
+        </mat-card>
+      </div>
+
+      <div class="container" style="width: 80%;">
+        <mat-form-field>
+          <input matInput placeholder="ID" type="text" formControlName="id">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Nom" type="text" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Nom d'utilisateur" type="text" formControlName="username">
+        </mat-form-field>
+
+        <button mat-flat-button class="submitBtn" [disabled]="!form.valid" type="submit"> Editer </button>
+      </div>
+      <p> Il faudra une logique plus complexe pour éditer le mot de passe, l'email et la photo de profil</p>
+
+    </mat-card>
+  </div>
+</form>

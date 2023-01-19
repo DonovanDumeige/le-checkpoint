@@ -50,19 +50,9 @@ export class UserService {
   ): Promise<Partial<UserEntity>> {
     let hash;
 
-    const username = await this.userDB.findOneBy({ username: dto.username });
-    const email = await this.userDB.findOneBy({ email: dto.email });
     const findUser = await this.userDB.findOneBy({ id });
     if (dto.password) {
       hash = await argon.hash(dto.password);
-    }
-
-    if (dto.email === email.email) {
-      throw new ConflictException('Email déjà enregistré.');
-    }
-
-    if (dto.username === username.username) {
-      throw new ConflictException('Ce nom est déjà pris.');
     }
 
     if (this.isOwnerOrAdmin(findUser, user)) {
