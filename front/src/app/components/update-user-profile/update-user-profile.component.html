@@ -1,1 +1,22 @@
-<h1>is authenticated !</h1>
+<form [formGroup]="form" (ngSubmit)="update()">
+  <div>
+    <mat-card class="container">
+      <mat-form-field>
+        <input matInput placeholder="ID" type="text" formControlName="id">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Nom" type="text" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Nom d'utilisateur" type="text" formControlName="username">
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" [disabled]="!form.valid" type="submit"> Editer </button>
+
+      <p> Il faudra une logique plus complexe pour éditer le mot de passe, l'email et la photo de profil</p>
+
+    </mat-card>
+  </div>
+</form>

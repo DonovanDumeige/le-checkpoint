@@ -57,6 +57,8 @@ export class UserService {
       catchError(err => throwError(() => err))
       )
   }
-
+   updateUser(user: User): Observable<User>{
+    return this.http.put<any>('http://localhost:3000/user/' + user.id, user)
+   }
   //fin classe
 }
