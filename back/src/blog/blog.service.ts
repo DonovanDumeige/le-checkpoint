@@ -73,6 +73,8 @@ export class BlogService {
       });
       this.deleteData(upArticle);
       return upArticle;
+    } else {
+      throw new UnauthorizedException('Permissions insuffisantes.');
     }
   }
 
@@ -81,6 +83,8 @@ export class BlogService {
     if (this.userIsAuthor(article, user)) {
       await this.blogDB.delete(id);
       return `L'article n°${id} a bien été supprimé.`;
+    } else {
+      throw new UnauthorizedException('Permissions insuffisantes.');
     }
   }
 
