@@ -7,10 +7,6 @@ export class EditArticleDTO {
 
   @IsString()
   @IsOptional()
-  slug: string;
-
-  @IsString()
-  @IsOptional()
   description: string;
 
   @IsString()

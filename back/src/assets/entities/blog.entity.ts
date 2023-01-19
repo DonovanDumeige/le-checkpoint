@@ -22,15 +22,18 @@ export class BlogEntity extends TimeStampEntity {
   @Column({ default: 0 })
   likes: number;
 
-  @Column()
+  @Column({ default: null })
   headerImage: string;
 
-  @Column()
+  @Column({ default: null })
   publishedDate: Date;
 
   @Column({ default: false })
   isPublished: boolean;
 
-  @ManyToOne(() => UserEntity, (author) => author.articles)
+  @ManyToOne(() => UserEntity, (author) => author.articles, {
+    eager: true,
+    cascade: ['insert', 'update'],
+  })
   author: UserEntity;
 }
