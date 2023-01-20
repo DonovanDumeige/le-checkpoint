@@ -125,6 +125,8 @@ export class BlogController {
   @Get('image/:imagename')
   findImage(@Param('imagename') imagename, @Response() res) {
     return res.sendFile(
+      // res.sendFile() permet de transférer un fichier au chemin donné.
+      //process.cwd() retourne le repertoire de travail actuel
       join(process.cwd(), 'uploads/blog-header-images/' + imagename),
     );
   }

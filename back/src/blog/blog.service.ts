@@ -58,8 +58,6 @@ export class BlogService {
   async editArticle(id: number, data: EditArticleDTO, user) {
     let slug;
     const findArticle = await this.findOnebyID(id);
-    console.log(findArticle);
-    console.log('Data title :', data.title);
 
     if (data.title && data.title != findArticle.title) {
       slug = this.generateSlug(data.title);

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -16,13 +16,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { UsersComponent } from './components/users/users.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 import { MatCardModule} from '@angular/material/card';
-import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component'
+import { UpdateUserProfileComponent } from './components/users/update-user-profile/update-user-profile.component'
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
+import { HomeComponent } from './components/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     RegisterComponent,
     UsersComponent,
     UserProfileComponent,
-    UpdateUserProfileComponent
+    UpdateUserProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
