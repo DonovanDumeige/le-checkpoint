@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { User } from 'src/app/services/authentification.service';
+import { User } from 'src/app/models/user.interface';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
