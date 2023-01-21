@@ -29,6 +29,7 @@ import { registerLocaleData } from '@angular/common';
 import * as fr from "@angular/common/locales/fr";
 import { CreateArticleComponent } from './components/blog/create-article/create-article.component'
 import { WINDOW_PROVIDERS } from './window-token';
+import { MarkdownModule } from 'ngx-markdown'
 
 @NgModule({
   declarations: [
@@ -61,6 +62,8 @@ import { WINDOW_PROVIDERS } from './window-token';
     MatCardModule,
     MatProgressBarModule,
     MatIconModule,
+
+    MarkdownModule.forRoot()
 
 
 

@@ -3,8 +3,10 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { BlogService } from 'src/app/services/blog.service';
+import { UserService } from 'src/app/services/user.service';
 
 export interface File {
   data: any;
@@ -18,21 +20,23 @@ export interface File {
 })
 export class CreateArticleComponent implements OnInit {
 
-  @ViewChild('fileUpload', {static: false}) fileUpload!: ElementRef;
+  @ViewChild("fileUpload", {static: false}) fileUpload!: ElementRef;
 
   file: File = {
     data: null,
-    progress: 0,
     inProgress: false,
-  }
+    progress: 0
+  };
 
   form!: FormGroup;
 
-
   constructor(
     private formBuilder: FormBuilder,
-    private blog: BlogService,
-    ) {}
+    private blogService: BlogService,
+    private authService: AuthentificationService,
+    private userService: UserService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -41,12 +45,14 @@ export class CreateArticleComponent implements OnInit {
       slug: [{value: null, disabled: true}],
       description: [null, [Validators.required]],
       content: [null, [Validators.required]],
-      headerImage: [null, [Validators.required]]
+      headerImage: [null]
     })
   }
 
   post() {
-    this.blog.post(this.form.getRawValue()).subscribe();
+    this.blogService.post(this.form.getRawValue()).pipe(
+      tap(() => this.router.navigate(['../']))
+    ).subscribe();
   }
 
   onClick() {
@@ -56,19 +62,19 @@ export class CreateArticleComponent implements OnInit {
       this.file = {
         data: fileInput.files[0],
         inProgress: false,
-        progress: 0,
-      }
+        progress: 0
+      };
+      this.fileUpload.nativeElement.value = '';
+      this.uploadFile();
     };
-    this.fileUpload.nativeElement.value = '';
-    this.uploadFile();
   }
 
-  uploadFile(){
+  uploadFile() {
     const formData = new FormData();
     formData.append('file', this.file.data);
     this.file.inProgress = true;
 
-    this.blog.uploadHeaderImage(formData).pipe(
+    this.blogService.uploadHeaderImage(formData).pipe(
       map((event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
@@ -81,12 +87,10 @@ export class CreateArticleComponent implements OnInit {
       catchError((error: HttpErrorResponse) => {
         this.file.inProgress = false;
         return of('Upload failed');
+      })).subscribe((event: any) => {
+        if(typeof (event) === 'object') {
+          this.form.patchValue({headerImage: event.body.filename});
+        }
       })
-    ).subscribe((event: any) => {
-      if (typeof (event) === 'object') {
-        this.form.patchValue({ headerImage: event.body.filename });
-      }
-    })
-
   }
 }

@@ -42,11 +42,38 @@ label{
   width: 80%;
 }
 
-.form{
+.form-field-container{
   width: 100%;
 }
-
-#form-content{
-  min-height: 45vh;
+.form{
+  width: 50%;
 }
 
+.content{
+  display:flex;
+  width: 100%;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+
+.textarea {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.07);
+  min-height: 45vh;
+  padding: 8px;
+  transition: all 300ms ease-out;
+
+}
+
+.textarea:hover{
+  box-shadow: 0 6px 12px 3px rgba(0,0,0,.09),
+  0 2px 3px 1px rgba(0,0,0,.06)
+}
+.markdown{
+  display: block;
+  border: 1px dotted black;
+  float: right;
+  width: 50%;
+  flex-wrap: nowrap;
+}

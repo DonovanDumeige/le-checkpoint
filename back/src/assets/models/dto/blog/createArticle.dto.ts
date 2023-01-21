@@ -12,4 +12,8 @@ export class CreateArticleDTO {
   @IsString()
   @IsNotEmpty()
   content: string;
+
+  @IsString()
+  @IsOptional()
+  headerImage: string;
 }

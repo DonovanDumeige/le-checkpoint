@@ -28,21 +28,27 @@
       </div>
 
       <div class="container container-article">
-        <mat-form-field class="form">
+        <mat-form-field class="form-field-container">
           <input matInput placeholder="ID" formControlName="id">
         </mat-form-field>
 
-        <mat-form-field class="form">
+        <mat-form-field class="form-field-container">
           <input matInput placeholder="Titre" formControlName="title">
         </mat-form-field>
 
-        <mat-form-field class="form">
+        <mat-form-field class="form-field-container">
           <input matInput placeholder="Description" formControlName="description">
         </mat-form-field>
 
-        <mat-form-field class="form" id="form-content" >
-          <input matInput placeholder="Contenu" formControlName="content">
+        <div class="content">
+        <mat-form-field class="form">
+          <textarea matInput cols="70" rows="15"
+          placeholder="Ecrivez votre article ici..."
+          class="textarea"
+          formControlName="content"></textarea>
         </mat-form-field>
+        <markdown [data]="form.get('content')?.value" class="markdown">Article :</markdown>
+        </div>
       </div>
 
       <button class="submitBtn" mat-flat-button [disabled]="form.invalid" type="submit" (click)="post()">Ajouter article</button>
