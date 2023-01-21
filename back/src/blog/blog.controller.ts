@@ -26,6 +26,7 @@ import { use } from 'passport';
 import { EditArticleDTO } from 'src/assets/models/dto/blog/editArticle.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { join } from 'path';
+import { UserIsAuthor } from 'src/blog/guard/userIsAuthor.guard';
 
 export const url = 'http://localhost:3000/api/blog';
 
@@ -86,21 +87,21 @@ export class BlogController {
   }
 
   @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
   @Put(':id')
   updateOneArticle(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: EditArticleDTO,
     @User() user,
   ) {
-    return this.blogService.editArticle(id, data, user);
+    return this.blogService.editArticle(id, data);
   }
 
   @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
   @Delete(':id')
-  deleteOneArticle(@Param('id', ParseIntPipe) id: number, @User() user) {
-    return this.blogService.deleteOneArticle(id, user);
+  deleteOneArticle(@Param('id', ParseIntPipe) id: number) {
+    return this.blogService.deleteOneArticle(id);
   }
 
   @Get(':id')
@@ -109,17 +110,10 @@ export class BlogController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id/image/upload')
+  @Post('image/upload')
   @UseInterceptors(FileInterceptor('file', storage))
-  async uploadImage(
-    @Param('id', ParseIntPipe) id: number,
-    @UploadedFile() file,
-    @User() user,
-    @Body() data: EditArticleDTO,
-  ) {
-    data.headerImage = file.filename;
-    const upArticle = await this.blogService.editArticle(id, data, user);
-    return upArticle;
+  async uploadImage(@UploadedFile() file, @Request() req) {
+    return file;
   }
 
   @Get('image/:imagename')

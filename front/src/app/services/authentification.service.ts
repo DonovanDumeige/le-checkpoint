@@ -27,6 +27,7 @@ export class AuthentificationService {
   }
 
   login(loginForm: LoginForm) {
+
     return this.http.post<any>('api/auth/login', {
     username: loginForm.username,
     password:loginForm.password}).pipe(
@@ -35,6 +36,10 @@ export class AuthentificationService {
         return token;
       })
     );
+  }
+
+  logout(){
+    localStorage.removeItem(JWT_TOKEN);
   }
 
   isAuthenticated() {
@@ -49,6 +54,7 @@ export class AuthentificationService {
       )
     ));
   }
+
 
 
 }

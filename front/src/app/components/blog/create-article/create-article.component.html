@@ -1,0 +1,53 @@
+<form [formGroup]="form">
+
+  <div>
+    <mat-card class="container">
+
+      <div class="card-container">
+
+        <mat-card>
+          <mat-card-content>
+            <img class="upImage" *ngIf="form.get('headerImage')?.value"
+              src="/api/blog/image/{{form.get('headerImage')?.value}}">
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <label for="upload">Importer votre image :</label>
+            <button name="upload" mat-button color="warn" (click)="onClick()">
+              <mat-icon name="upload">cloud_upload</mat-icon>
+            </button>
+          </mat-card-actions>
+          <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/" style="display:none;">
+
+        </mat-card>
+      </div>
+
+      <div class="container container-article">
+        <mat-form-field class="form">
+          <input matInput placeholder="ID" formControlName="id">
+        </mat-form-field>
+
+        <mat-form-field class="form">
+          <input matInput placeholder="Titre" formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field class="form">
+          <input matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+
+        <mat-form-field class="form" id="form-content" >
+          <input matInput placeholder="Contenu" formControlName="content">
+        </mat-form-field>
+      </div>
+
+      <button class="submitBtn" mat-flat-button [disabled]="form.invalid" type="submit" (click)="post()">Ajouter article</button>
+    </mat-card>
+  </div>
+
+
+</form>

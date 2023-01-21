@@ -1,34 +1,36 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './models/user.interface';
+import { AuthentificationService } from './services/authentification.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'front';
-  userRole = 'admin'
-  user!: User;
-  entries = [{
-    name: 'Login',
-    link: 'login',
+  entries = [
+  {
+    title: "Connexion"
   },
   {
-    name: 'Register',
-    link: 'register',
+    title:"S'inscrire"
   },
   {
-    name: 'Update Profile',
-    link: 'update-profile'
+    title: "Editer mon profil"
   }
 ]
-  constructor(private router: Router) {}
-ngOnInit(): void {
-  console.log('Role ?', this.user.role)
-}
+  constructor(
+    private router: Router,
+    private auth: AuthentificationService) {}
+
   navigateTo(value:any) {
     this.router.navigate(['../', value]);
+  }
+
+  logout() {
+    this.auth.logout()
+    this.router.navigate(['home'])
   }
 }

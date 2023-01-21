@@ -26,7 +26,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './components/home/home.component';
 import { AllBlogArticlesComponent } from './components/blog/all-blog-articles/all-blog-articles.component';
 import { registerLocaleData } from '@angular/common';
-import * as fr from "@angular/common/locales/fr"
+import * as fr from "@angular/common/locales/fr";
+import { CreateArticleComponent } from './components/blog/create-article/create-article.component'
+import { WINDOW_PROVIDERS } from './window-token';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import * as fr from "@angular/common/locales/fr"
     UserProfileComponent,
     UpdateUserProfileComponent,
     HomeComponent,
-    AllBlogArticlesComponent
+    AllBlogArticlesComponent,
+    CreateArticleComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import * as fr from "@angular/common/locales/fr"
 
   ],
   providers: [
+    WINDOW_PROVIDERS,
     JwtHelperService,
     {
       provide: JWT_OPTIONS,

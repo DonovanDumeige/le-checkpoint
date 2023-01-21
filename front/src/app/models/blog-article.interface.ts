@@ -12,7 +12,7 @@ export interface BlogArticle {
   likes?: number;
   headerImage?: string;
   publishedDate?: Date;
-  isPublished: boolean;
+  isPublished?: boolean;
   author?: User
 }
 

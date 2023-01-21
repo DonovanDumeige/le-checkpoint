@@ -56,7 +56,7 @@ export class BlogService {
     return allArticles;
   }
 
-  async editArticle(id: number, data: EditArticleDTO, user) {
+  async editArticle(id: number, data: EditArticleDTO) {
     let slug;
     const findArticle = await this.findOnebyID(id);
 
@@ -64,7 +64,7 @@ export class BlogService {
       slug = this.generateSlug(data.title);
     }
 
-    if (this.userIsAuthor(findArticle, user)) {
+    try {
       const upArticle = await this.blogDB.save({
         ...findArticle,
         ...data,
@@ -72,18 +72,18 @@ export class BlogService {
       });
       this.deleteData(upArticle);
       return upArticle;
-    } else {
-      throw new UnauthorizedException('Permissions insuffisantes.');
+    } catch (err) {
+      console.log('erreur :', err);
     }
   }
 
-  async deleteOneArticle(id: number, user) {
+  async deleteOneArticle(id: number) {
     const article = await this.findOnebyID(id);
-    if (this.userIsAuthor(article, user)) {
+    try {
       await this.blogDB.delete(id);
       return `L'article n°${id} a bien été supprimé.`;
-    } else {
-      throw new UnauthorizedException('Permissions insuffisantes.');
+    } catch (err) {
+      console.log('erreur :', err);
     }
   }
 
@@ -112,14 +112,6 @@ export class BlogService {
 
   generateSlug(title: string) {
     return slugify(title);
-  }
-
-  userIsAuthor(objet: any, user: any): boolean {
-    return (
-      user.role === Role.CHIEFEDITOR ||
-      user.role === Role.ADMIN ||
-      (objet && objet.author.id === user.id)
-    );
   }
 
   deleteData(objet: any): void {

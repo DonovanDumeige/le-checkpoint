@@ -3,9 +3,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: center;
 }
 
+.card-container{
+  width: 25%;
+  margin-bottom: 1rem;
+}
 .card{
   width: 80%;
   max-width: 80%;
@@ -34,3 +37,16 @@ li{
 label{
   cursor: pointer;
 }
+
+.container-article{
+  width: 80%;
+}
+
+.form{
+  width: 100%;
+}
+
+#form-content{
+  min-height: 45vh;
+}
+
