@@ -4,7 +4,14 @@
     <mat-card-header>
 
       <div mat-card-avatar>
-        <img src="http://localhost:3000/user/profile-image/{{user.profileImage}}" alt="" class="header-image">
+        <img *ngIf="user.profileImage !== null; else placeHolderImage"
+        src="/api/user/profile-image/{{user.profileImage}}"
+        alt="Image de profil de {{user.username}}" class="header-image">
+        <ng-template #placeHolderImage>
+          <img src="../../../../assets/placeholders/placeholder-user-profile.png"
+          alt="Image utilisateur par défaut" class="header-image">
+        </ng-template>
+
       </div>
           <mat-card-title>{{user.name}}</mat-card-title>
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
