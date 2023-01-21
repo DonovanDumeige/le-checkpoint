@@ -1,6 +1,6 @@
 .main-container{
   margin: 0 auto;
-  width: 50vw;
+  width: 60vw;
 }
 
 .container{
@@ -8,21 +8,23 @@
   width: 100%;
   gap: 2rem;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
+
 .img-container{
-  width: 30%;
+  width: 33%;
 }
 .header-image{
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width : 8vw;
-  height: 18vh;
+  width : 100%;
+  margin: 0 auto;
   object-fit: cover;
 
 }
 
 .article-title{
-  width: 70%;
+  width: 67%;
 }

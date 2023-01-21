@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from './models/user.interface';
+import { AuthentificationService } from './services/authentification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,23 +10,27 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'front';
-
-  entries = [{
-    name: 'Login',
-    link: 'login',
+  entries = [
+  {
+    title: "Connexion"
   },
   {
-    name: 'Register',
-    link: 'register',
+    title:"S'inscrire"
   },
   {
-    name: 'Update Profile',
-    link: 'update-profile'
+    title: "Editer mon profil"
   }
 ]
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AuthentificationService) {}
 
   navigateTo(value:any) {
     this.router.navigate(['../', value]);
+  }
+
+  logout() {
+    this.auth.logout()
+    this.router.navigate(['home'])
   }
 }

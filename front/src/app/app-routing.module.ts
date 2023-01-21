@@ -7,6 +7,7 @@ import { UserProfileComponent } from './components/users/user-profile/user-profi
 import { UsersComponent } from './components/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './components/home/home.component';
+import { CreateArticleComponent } from './components/blog/create-article/create-article.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,13 @@ const routes: Routes = [
   },
   {
     path:'home',
-    component: HomeComponent,
+    component: HomeComponent
+  },
+  {
+    path:'create-article',
+    component: CreateArticleComponent,
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'login',
