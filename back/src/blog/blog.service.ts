@@ -41,6 +41,7 @@ export class BlogService {
   async findAll() {
     const articles = await this.blogDB.find();
     articles.forEach((article) => this.deleteData(article));
+    return articles;
   }
 
   async findAllByAuthor(id: number) {

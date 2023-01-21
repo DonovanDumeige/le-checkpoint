@@ -27,7 +27,7 @@ import { EditArticleDTO } from 'src/assets/models/dto/blog/editArticle.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { join } from 'path';
 
-export const url = 'http://localhost:3000/blog';
+export const url = 'http://localhost:3000/api/blog';
 
 export const storage = {
   storage: diskStorage({

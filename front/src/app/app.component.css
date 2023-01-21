@@ -50,6 +50,10 @@ button {
   align-items: center;
 }
 
+.logo-container:hover {
+  cursor: pointer;
+}
+
 .logo{
   width: 20vw;
   height: auto;

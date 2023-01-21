@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -24,6 +24,10 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './components/home/home.component';
+import { AllBlogArticlesComponent } from './components/blog/all-blog-articles/all-blog-articles.component';
+import { registerLocaleData } from '@angular/common';
+import * as fr from "@angular/common/locales/fr"
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +36,8 @@ import { HomeComponent } from './components/home/home.component';
     UsersComponent,
     UserProfileComponent,
     UpdateUserProfileComponent,
-    HomeComponent
+    HomeComponent,
+    AllBlogArticlesComponent
   ],
   imports: [
     BrowserModule,
@@ -67,8 +72,15 @@ import { HomeComponent } from './components/home/home.component';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
+    },
+    {
+      provide: LOCALE_ID, useValue: "fr-FR"
     }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(fr.default)
+  }
+}

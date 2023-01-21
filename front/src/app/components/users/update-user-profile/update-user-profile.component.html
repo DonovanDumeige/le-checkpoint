@@ -7,7 +7,7 @@
         <mat-card>
           <mat-card-content>
             <img class='upImage' *ngIf="form.get('profileImage')?.value"
-              src="http://localhost:3000/user/profile-image/{{form.get('profileImage')?.value}}">
+              src="/api/user/profile-image/{{form.get('profileImage')?.value}}">
             <ul>
               <li>
                 <mat-progress-bar [value]="file.progress"></mat-progress-bar>

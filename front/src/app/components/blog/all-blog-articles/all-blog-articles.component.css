@@ -1,0 +1,28 @@
+.main-container{
+  margin: 0 auto;
+  width: 50vw;
+}
+
+.container{
+  display:flex;
+  width: 100%;
+  gap: 2rem;
+  align-items: center;
+}
+
+.img-container{
+  width: 30%;
+}
+.header-image{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width : 8vw;
+  height: 18vh;
+  object-fit: cover;
+
+}
+
+.article-title{
+  width: 70%;
+}

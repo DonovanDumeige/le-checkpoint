@@ -75,14 +75,15 @@ export class UserController {
       return this.userService.paginate({
         page: Number(page),
         limit: Number(limit),
-        route: `http://localhost:${this.config.get('APP_PORT')}/user/index`,
+        route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
       });
     } else {
       return this.userService.paginateFilterByUsername(
         {
           page: Number(page),
           limit: Number(limit),
-          route: `http://localhost:${this.config.get('APP_PORT')}/user/index`,
+          // eslint-disable-next-line prettier/prettier
+          route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
         },
         { username },
       );

@@ -3,7 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { AuthentificationService, User } from 'src/app/services/authentification.service';
+import { User } from 'src/app/models/user.interface';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { UserService } from 'src/app/services/user.service';
 
 export interface File {
