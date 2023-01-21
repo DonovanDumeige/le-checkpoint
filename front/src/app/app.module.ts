@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './components/home/home.component';
 import { AllBlogArticlesComponent } from './components/blog/all-blog-articles/all-blog-articles.component';
+import { registerLocaleData } from '@angular/common';
+import * as fr from "@angular/common/locales/fr"
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,8 +72,15 @@ import { AllBlogArticlesComponent } from './components/blog/all-blog-articles/al
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
+    },
+    {
+      provide: LOCALE_ID, useValue: "fr-FR"
     }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(fr.default)
+  }
+}

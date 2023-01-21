@@ -30,7 +30,7 @@ export class UserService {
 
   findOne(id: number): Observable<User> {
     console.log('test');
-    return this.http.get<any>('http://localhost:3000/user/' + id).pipe(
+    return this.http.get<any>('/api/user/' + id).pipe(
       map((user: User) => user)
     );
 
@@ -40,14 +40,14 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('page', String(page));
     params = params.append('limit', String(size))
-    return this.http.get<any>('http://localhost:3000/user/index', { params }).pipe(
+    return this.http.get<any>('/api/user/index', { params }).pipe(
       map((userData: UserData) => userData),
       catchError(err => throwError(() => err))
     )
   }
 
   uploadProfileImage(formData: FormData): Observable<any> {
-    return this.http.post<FormData>("http://localhost:3000/user/upload", formData, {
+    return this.http.post<FormData>("/api/user/upload", formData, {
       reportProgress: true,
       observe: 'events',
     }
@@ -59,13 +59,13 @@ export class UserService {
     params = params.append('limit', String(size));
     params = params.append('username', username);
 
-    return this.http.get<any>('http://localhost:3000/user/index', { params }).pipe(
+    return this.http.get<any>('/api/user/index', { params }).pipe(
       map((userData: UserData) => userData),
       catchError(err => throwError(() => err))
     )
   }
   updateUser(user: User): Observable<User> {
-    return this.http.put<any>('http://localhost:3000/user/' + user.id, user)
+    return this.http.put<any>('/api/user/' + user.id, user)
   }
 
   //fin classe

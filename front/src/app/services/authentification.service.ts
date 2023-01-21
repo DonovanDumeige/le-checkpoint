@@ -22,12 +22,12 @@ export class AuthentificationService {
   constructor(private http:HttpClient, private jwtHelper: JwtHelperService) {}
 
   register(user: User){
-    return this.http.post<any>('http://localhost:3000/auth/signin', user).pipe(
+    return this.http.post<any>('api/auth/signin', user).pipe(
       map(user => user))
   }
 
   login(loginForm: LoginForm) {
-    return this.http.post<any>('http://localhost:3000/auth/login', {
+    return this.http.post<any>('api/auth/login', {
     username: loginForm.username,
     password:loginForm.password}).pipe(
       map((token) => {
