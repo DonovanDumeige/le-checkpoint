@@ -1,0 +1,56 @@
+.main-container{
+  margin: 0 auto;
+  width: 60vw;
+}
+
+.container{
+  display:flex;
+  width: 100%;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+
+.img-container{
+  width: 33%;
+}
+.header-image{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width : 100%;
+  margin: 0 auto;
+  object-fit: cover;
+
+}
+
+.article-title{
+  width: 67%;
+}
+
+#title{
+  font-family: var(--font-title), serif;
+}
+
+#article-content{
+  font-family: var(--font-content), serif;
+}
+
+.metadata{
+  width:100%;
+  display: flex;
+  gap: 5px;
+}
+.container .metadata .meta-item{
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.card{
+  margin: 1.5rem 0;
+}
+
+.card:hover{
+  cursor:pointer;
+}

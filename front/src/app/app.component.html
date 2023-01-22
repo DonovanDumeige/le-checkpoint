@@ -1,0 +1,22 @@
+
+<mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <a class="logo-container" routerLink="home">
+        <img class="logo" src="../assets/img/logov2.png" alt="logo checkpoint">
+      </a>
+      <span class="example-spacer"></span>
+      <button mat-flat-button routerLink="create-article">Nouvel article</button>
+      <button mat-flat-button routerLink="users">Liste utilisateurs</button>
+
+      <mat-form-field class="form-field" name="loginRegistrerDropdown">
+        <mat-select placeholder="Connexion">
+          <mat-option (click)="navigateTo('login')">Connexion</mat-option>
+          <mat-option (click)="navigateTo('register')">S'inscrire</mat-option>
+          <mat-option (click)="navigateTo('update-profile')">Editer mon profil</mat-option>
+          <mat-option (click)="logout()">Déconnexion</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+    </mat-toolbar-row>
+  </mat-toolbar>
+<router-outlet></router-outlet>

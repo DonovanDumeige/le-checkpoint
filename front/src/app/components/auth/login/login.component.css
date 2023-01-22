@@ -1,0 +1,19 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container > * {
+  width: 40%;
+}
+
+.submitBtn{
+  color: goldenrod;
+  background-color: #8e3a22;
+  width : 20vw;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}

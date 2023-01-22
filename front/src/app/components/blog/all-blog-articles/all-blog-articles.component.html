@@ -1,0 +1,32 @@
+<div class="main-container">
+  <mat-card *ngFor="let article of (dataSource | async)?.items" class="card" routerLink="../article/{{article.id}}">
+    <div style class="container">
+      <div class="img-container">
+        <img *ngIf="article.headerImage !== null; else placeHolderImage" src="/api/blog/image/{{article.headerImage}}"
+          class="header-image">
+        <ng-template #placeHolderImage>
+          <img src="../../../../assets/placeholders/placeholder-blog-article2.png" class="header-image"
+            alt="image de remplacement de l'article {{article.id}}">
+        </ng-template>
+      </div>
+      <div>
+        <h2 class="article-title" id="title">{{article.title}}</h2>
+        <p>{{article.description}}</p>
+        <div class="metadata" id="article-content">
+          <p class="meta-item">{{article.author?.username}}</p>
+          <p class="meta-item"> | </p>
+          <p class="meta-item">{{article.createdAt | date: 'dd MMMM yyyy, à HH:mm'}}</p>
+        </div>
+      </div>
+
+
+    </div>
+  </mat-card>
+  <mat-paginator
+  [length]="(dataSource | async)?.meta?.totalItems"
+  [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+  [pageSizeOptions]="[5,10,25,100]"
+  (page)="pageEvent = $event; onPaginateChange($event)"
+  showFirstLastButtons>
+  </mat-paginator>
+</div>

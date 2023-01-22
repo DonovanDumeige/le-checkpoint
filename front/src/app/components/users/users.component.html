@@ -1,0 +1,51 @@
+<h1 style="text-align: center;"> Liste des utilisateurs </h1>
+
+<mat-form-field class="searching-bar">
+  <mat-label>Filtre par nom d'utilisateur</mat-label>
+  <input matInput type="text" [(ngModel)]="filterValue"
+  (input)="findByName(filterValue)" placeholder="Rechercher un utilisateur">
+</mat-form-field>
+
+<div *ngIf="dataSource">
+  <!-- Affiche les users via un tableau -->
+  <mat-table [dataSource]="dataSource.items">
+    <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColums" (click)="navigateToProfile(row.id)"></mat-row>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.username}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.name}} </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Mail</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.role}} </mat-cell>
+    </ng-container>
+  </mat-table>
+
+  <!-- Affiche la pagination -->
+  <mat-paginator
+  [length]="dataSource.meta.totalItems"
+  [pageSize]="dataSource.meta.itemsPerPage"
+  [pageSizeOptions]="[5,10,25,100]"
+  (page)="pageEvent = $event; onPaginateChange($event)"
+  showFirstLastButtons>
+</mat-paginator>
+</div>

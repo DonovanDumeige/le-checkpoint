@@ -1,0 +1,84 @@
+.title{
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-container{
+  width: 25%;
+  margin-bottom: 1rem;
+}
+.card{
+  width: 80%;
+  max-width: 80%;
+  height: 300px;
+  margin-top: 2%;
+  margin-left: 10%;
+}
+
+.submitBtn{
+  color: goldenrod;
+  background-color: #8e3a22;
+  width : 10vw;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.upImage{
+  width: 10vw;
+}
+
+li{
+  list-style-type: none;
+}
+
+label{
+  cursor: pointer;
+}
+
+.container-article{
+  width: 80%;
+}
+
+.form-field-container{
+  width: 100%;
+}
+.form{
+  width: 50%;
+}
+
+.content{
+  display:flex;
+  width: 100%;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+
+.textarea {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.07);
+  min-height: 45vh;
+  padding: 8px;
+  transition: all 300ms ease-out;
+
+}
+
+.textarea:hover{
+  box-shadow: 0 6px 12px 3px rgba(0,0,0,.09),
+  0 2px 3px 1px rgba(0,0,0,.06)
+}
+.markdown{
+  display: block;
+  border: 1px dotted black;
+  float: right;
+  width: 50%;
+  flex-wrap: nowrap;
+}

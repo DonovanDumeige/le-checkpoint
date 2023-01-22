@@ -1,0 +1,60 @@
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+a{
+  padding : 0 10px;
+}
+
+button {
+  margin :0 10px;
+}
+
+.mat-mdc-select-placeholder {
+  font-size: 8px;
+}
+
+.test {
+  background-color: blue;
+}
+
+.toolbar{
+  background-color: black;
+  color: goldenrod;
+}
+
+.form-field{
+  margin-top: 1.4rem;
+  margin-left: 1.5rem;
+  height: 65px;
+  background-color: transparent;
+  font-size: 0.8rem;
+}
+
+.mat-mdc-text-field--filled:not(.mdc-text-field--disabled){
+  color: white;
+  background-color: transparent;
+}
+
+.toolbar{
+  background-color: #8e3a22;
+}
+.logo-container{
+  text-decoration: none;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.logo-container:hover {
+  cursor: pointer;
+}
+
+.logo{
+  width: 20vw;
+  height: auto;
+}

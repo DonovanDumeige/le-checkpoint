@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: center;
+}
+
+.card{
+  width: 80%;
+  max-width: 80%;
+  height: 300px;
+  margin-top: 2%;
+  margin-left: 10%;
+}
+
+.submitBtn{
+  color: goldenrod;
+  background-color: #8e3a22;
+  width : 10vw;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.upImage{
+  width: 10vw;
+}
+
+li{
+  list-style-type: none;
+}
+
+label{
+  cursor: pointer;
+}

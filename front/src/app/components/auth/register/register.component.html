@@ -1,0 +1,36 @@
+<h1 style="text-align:center;"> S'inscrire</h1>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Prénom & Nom" formControlName="name">
+      <mat-hint *ngIf="registerForm.get('name')?.errors">Nom complet requis </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nom d'utilisateur" formControlName="username">
+      <mat-hint *ngIf="registerForm.get('username')?.errors">Nom d'utilisateur requis</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Adresse mail" formControlName="email">
+      <mat-hint *ngIf="registerForm.get('email')?.errors"> Adresse mail requise </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Votre mot de passe" formControlName="password" type="password">
+      <mat-hint *ngIf="registerForm.get('password')?.errors"> Mot de passe requis</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Confirmez votre mot de passe" formControlName="passwordConfirm" type="password">
+      <mat-hint *ngIf="registerForm.get('passwordConfirm')?.errors"> Répetez votre mot de passe</mat-hint>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" [disabled]="registerForm.invalid" type="submit"> S'inscrire</button>
+  </div>
+</form>
+
+
+<h3 *ngIf="!registerForm.valid"> Forms contains following errors</h3>
+<p *ngIf="registerForm.get('password')?.hasError('passwordInvalid')"> Le mot de passe doit contenir un nombre</p>
+<p *ngIf="registerForm.hasError('passwordNotMatching')"> Les mots de passe ne correspondent pas.</p>
