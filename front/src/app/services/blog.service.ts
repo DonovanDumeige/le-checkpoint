@@ -21,6 +21,10 @@ export class BlogService {
     return this.http.get<BlogArticlesPageable>('/api/blog/index', {params});
   }
 
+  findOne(id: number): Observable<BlogArticle>{
+    return this.http.get<BlogArticle>('/api/blog/' + id);
+  }
+
   post(article:BlogArticle): Observable<BlogArticle> {
     return this.http.post<BlogArticle>('/api/blog', article)
   }

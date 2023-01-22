@@ -29,7 +29,8 @@ import { registerLocaleData } from '@angular/common';
 import * as fr from "@angular/common/locales/fr";
 import { CreateArticleComponent } from './components/blog/create-article/create-article.component'
 import { WINDOW_PROVIDERS } from './window-token';
-import { MarkdownModule } from 'ngx-markdown'
+import { MarkdownModule } from 'ngx-markdown';
+import { ViewBlogArticleComponent } from './components/blog/view-blog-article/view-blog-article.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MarkdownModule } from 'ngx-markdown'
     UpdateUserProfileComponent,
     HomeComponent,
     AllBlogArticlesComponent,
-    CreateArticleComponent
+    CreateArticleComponent,
+    ViewBlogArticleComponent
   ],
   imports: [
     BrowserModule,

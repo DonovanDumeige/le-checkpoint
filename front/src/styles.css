@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: 'barlow';
+  src: url('./assets/fonts/Barlow/Barlow-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'barlow-light';
+  src: url('./assets/fonts/Barlow/Barlow-Light.ttf');
+}
+
+@font-face {
+  font-family: 'barlow-bold';
+  src: url('./assets/fonts/Barlow/Barlow-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'barlow-medium';
+  src: url('./assets/fonts/Barlow/Barlow-MediumItalic.ttf');
+}
+
+:root{
+  --font-title: "barlow-bold";
+  --font-content:"barlow";
+  --font-medium: "barlow-medium";
+  --font-light: "barlow-light";
+}
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; }
+#body {font-family: var(--font-content);}
+
+h1, h2, h3, .article-title{
+  font-family: var(--font-title), sans-serif
+}

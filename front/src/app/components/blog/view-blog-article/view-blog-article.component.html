@@ -1,0 +1,40 @@
+<div *ngIf="(article$ | async) as article" class="main-div">
+
+  <mat-card class="card">
+    <mat-card-header>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+
+        <div class="metadata-container">
+          <h1 id="titre">{{article.title}}</h1>
+          <p id="desc">{{article.description}}</p>
+          <div class="metadata">
+            <p class="meta-item"> Auteur : {{article.author?.username}}</p>
+            <p class="meta-item">|</p>
+            <p class="meta-item"> Publié le {{article.createdAt | date: 'd MMMM yyyy à HH:mm'}}</p>
+          </div>
+
+          <a class="btnProfile" routerLink="../../users/{{article.author?.id}}">
+            Voir le profil de {{article.author?.username}}
+          </a>
+
+        </div>
+        <img *ngIf="article.headerImage !== null; else placeHolderImage" src="/api/blog/image/{{article.headerImage}}"
+          class="header-image">
+        <ng-template #placeHolderImage>
+          <img src="../../../../assets/placeholders/placeholder-blog-article2.png" class="header-image"
+            alt="image de remplacement de l'article {{article.id}}">
+        </ng-template>
+
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <markdown class="markdown" [data]="article.content"></markdown>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+
+
+
+</div>
