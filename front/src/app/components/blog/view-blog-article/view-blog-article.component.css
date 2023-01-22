@@ -1,0 +1,61 @@
+.header-image{
+  border: 1px solid #ddd;
+  border-radius:  4px;
+  padding: 5px;
+  width:60%;
+  left: 35%;
+}
+
+.card{
+  width: 70%;
+  max-width: 70%;
+  margin-top: 2%;
+}
+
+.main-div{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.metadata{
+  display: flex;
+  flex-direction: row;
+  gap: .25rem
+}
+
+.meta-item{
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.metadata-container{
+  margin-left: 20px;
+  width: 40%;
+}
+
+#titre{
+  font-family: var(--font-title);
+}
+
+#desc{
+  font-family: var(--font-medium);
+}
+
+.btnProfile{
+  display: inline-block;
+  position: relative;
+  padding: 1rem;
+  min-width: 8.5vw;
+  max-width: 12vw;
+  min-height: 10px;
+  line-height: 10px;
+  background-color: #8e3a22;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  color: goldenrod;
+  font-weight: 600;
+}
+
