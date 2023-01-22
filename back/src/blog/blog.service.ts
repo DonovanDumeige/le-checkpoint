@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/assets/decorator';
 import { BlogEntity, UserEntity } from 'src/assets/entities';
@@ -34,6 +34,7 @@ export class BlogService {
 
   async findOnebyID(id: number) {
     const article = await this.blogDB.findOneBy({ id });
+    if (!article) throw new NotFoundException('Aucun article trouvé.');
     this.deleteData(article);
     return article;
   }
