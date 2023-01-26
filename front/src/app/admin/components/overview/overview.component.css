@@ -1,0 +1,39 @@
+table{
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 auto;
+}
+td, th{
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+th{
+  font-size: 1.1rem;
+}
+
+.actions{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+td{
+  font-size: 1.1rem;
+}
+
+.actions button{
+  background-color: #8e3a22;
+  padding: 10px;
+  color: white;
+  font-weight: 700;
+  border-radius: 25px;
+  outline: transparent;
+  border: transparent
+}
+
+.actions button a {
+  text-decoration: none;
+  color: white;
+}

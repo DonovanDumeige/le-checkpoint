@@ -30,7 +30,7 @@ export class UserService {
 
   findOne(id: number): Observable<User> {
     console.log('test');
-    return this.http.get<any>('/api/user/' + id).pipe(
+    return this.http.get<User>('/api/user/' + id).pipe(
       map((user: User) => user)
     );
 
@@ -66,6 +66,10 @@ export class UserService {
   }
   updateUser(user: User): Observable<User> {
     return this.http.put<any>('/api/user/' + user.id, user)
+  }
+
+  deleteUser(id: number) {
+    return this.http.delete<void>('/api/user/' + id)
   }
 
   //fin classe

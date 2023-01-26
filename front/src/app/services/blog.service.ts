@@ -35,4 +35,13 @@ export class BlogService {
       observe: 'events'
     })
   }
+
+  update(article: BlogArticle) {
+    return this.http.put<any>('/api/blog/' + article.id, article);
+  }
+
+  delete(id: number) {
+    return this.http.delete<void>('/api/blog/' + id)
+  }
+
 }

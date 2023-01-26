@@ -1,1 +1,44 @@
-<p>overview works!</p>
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row>
+
+    <button mat-flat-button routerLink="../create-article">Nouvel article</button>
+
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>
+
+<table *ngIf="dataSource">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+<tbody *ngFor="let article of dataSource.items">
+    <tr>
+        <td>{{article.id}}</td>
+        <td>{{article.title}}</td>
+        <td>{{article.author?.username}}</td>
+        <td>
+          <ng-template [ngIf]="article.author?.id === userID || role === 'admin' || role ==='chiefeditor'" >
+          <div class="actions">
+            <button><a href="admin/edit/{{article.id}}">Editer</a></button>
+            <button><a href="admin/delete/{{article.id}}">Supprimer</a></button>
+          </div>
+        </ng-template>
+        </td>
+
+    </tr>
+</tbody>
+</table>
+
+<mat-paginator *ngIf="dataSource"
+[length]="dataSource.meta.totalItems"
+[pageSize]="dataSource.meta.itemsPerPage"
+[pageSizeOptions]="[5,10,25,100]"
+(page)="pageEvent = $event; onPaginateChange($event)"
+showFirstLastButtons>
+</mat-paginator>
