@@ -35,6 +35,7 @@ import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path = require('path');
 import { join } from 'path';
+import { AuthGuard } from '@nestjs/passport';
 
 export const storage = {
   storage: diskStorage({
@@ -58,11 +59,13 @@ export class UserController {
     private readonly config: ConfigService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Promise<UserEntity[]> {
     return this.userService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('index')
   index(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,

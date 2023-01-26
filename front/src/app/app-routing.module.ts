@@ -9,11 +9,17 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { CreateArticleComponent } from './components/blog/create-article/create-article.component';
 import { ViewBlogArticleComponent } from './components/blog/view-blog-article/view-blog-article.component';
+import { RoleGuard } from './guards/role.guard';
+
 
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m=>m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m=>m.AdminModule),
+    canActivate:[RoleGuard],
+    data: {
+      role: ["admin", "editor", "chiefeditor"]
+    }
   },
   {
     path:'home',
@@ -22,12 +28,15 @@ const routes: Routes = [
   {
     path:'create-article',
     component: CreateArticleComponent,
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: {
+      role: "editor"
+    }
 
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
@@ -36,10 +45,12 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'users/:id',
     component: UserProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'update-profile',

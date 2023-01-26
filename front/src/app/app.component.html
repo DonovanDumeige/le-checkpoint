@@ -1,22 +1,32 @@
-
 <mat-toolbar class="toolbar">
-    <mat-toolbar-row>
-      <a class="logo-container" routerLink="home">
-        <img class="logo" src="../assets/img/logov2.png" alt="logo checkpoint">
-      </a>
-      <span class="example-spacer"></span>
-      <button mat-flat-button routerLink="create-article">Nouvel article</button>
+  <mat-toolbar-row>
+    <a class="logo-container" routerLink="home">
+      <img class="logo" src="../assets/img/logov2.png" alt="logo checkpoint">
+    </a>
+    <span class="example-spacer"></span>
+    <div *ngIf="role !== null" (change)="reload()">
+      <button mat-flat-button routerLink="admin">Admin</button>
       <button mat-flat-button routerLink="users">Liste utilisateurs</button>
-
-      <mat-form-field class="form-field" name="loginRegistrerDropdown">
+    </div>
+    <mat-form-field class="form-field" name="loginRegistrerDropdown">
+      <div *ngIf="role === null; else ConnectedUser">
         <mat-select placeholder="Connexion">
           <mat-option (click)="navigateTo('login')">Connexion</mat-option>
           <mat-option (click)="navigateTo('register')">S'inscrire</mat-option>
+
+      </mat-select>
+      </div>
+      <ng-template #ConnectedUser>
+        <mat-select placeholder="Mon compte">
           <mat-option (click)="navigateTo('update-profile')">Editer mon profil</mat-option>
           <mat-option (click)="logout()">Déconnexion</mat-option>
         </mat-select>
+      </ng-template>
 
-      </mat-form-field>
-    </mat-toolbar-row>
-  </mat-toolbar>
+
+
+
+    </mat-form-field>
+  </mat-toolbar-row>
+</mat-toolbar>
 <router-outlet></router-outlet>

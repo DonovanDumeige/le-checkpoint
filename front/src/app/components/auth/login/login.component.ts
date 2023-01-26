@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators'
+import { map, switchMap, tap } from 'rxjs/operators'
+import { User } from 'src/app/models/user.interface';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,8 @@ import { map } from 'rxjs/operators'
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup
+  role!:string;
+
 
   constructor(
     private authservice: AuthentificationService,
@@ -34,9 +38,26 @@ export class LoginComponent implements OnInit {
       if(this.loginForm.invalid){
         return;
       }
+
       this.authservice.login(this.loginForm.value).pipe(
-        map(token => this.router.navigate(['home']))
+        map(token => {
+          this.getRole()
+          location.replace('home')
+        })
         ) .subscribe();
+
+
+    }
+
+    getRole(){
+      this.authservice.getRole().subscribe(
+        (role) => {
+          this.role = role;
+          console.log(role)
+        }
+      )
+
+      localStorage.setItem("role", this.role)
     }
   // login() {
   //   this.authservice.login('admin', '123456').subscribe(data => console.log('success'));

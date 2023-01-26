@@ -22,7 +22,7 @@ export class AuthentificationService {
   constructor(private http:HttpClient, private jwtHelper: JwtHelperService) {}
 
   register(user: User){
-    return this.http.post<any>('api/auth/signin', user).pipe(
+    return this.http.post<User>('api/auth/signin', user).pipe(
       map(user => user))
   }
 
@@ -40,6 +40,8 @@ export class AuthentificationService {
 
   logout(){
     localStorage.removeItem(JWT_TOKEN);
+    localStorage.removeItem('role')
+
   }
 
   isAuthenticated() {
@@ -54,7 +56,12 @@ export class AuthentificationService {
       )
     ));
   }
-
-
+  getRole(){
+    return of(localStorage.getItem(JWT_TOKEN)).pipe(
+      switchMap((jwt: any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
+        map((jwt: any) => jwt.role)
+      )
+    ));
+  }
 
 }

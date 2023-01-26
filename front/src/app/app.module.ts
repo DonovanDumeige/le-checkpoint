@@ -30,7 +30,7 @@ import * as fr from "@angular/common/locales/fr";
 import { CreateArticleComponent } from './components/blog/create-article/create-article.component'
 import { WINDOW_PROVIDERS } from './window-token';
 import { MarkdownModule } from 'ngx-markdown';
-import { ViewBlogArticleComponent } from './components/blog/view-blog-article/view-blog-article.component'
+import { ViewBlogArticleComponent } from './components/blog/view-blog-article/view-blog-article.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { ViewBlogArticleComponent } from './components/blog/view-blog-article/vi
     HomeComponent,
     AllBlogArticlesComponent,
     CreateArticleComponent,
-    ViewBlogArticleComponent
+    ViewBlogArticleComponent,
   ],
   imports: [
     BrowserModule,
