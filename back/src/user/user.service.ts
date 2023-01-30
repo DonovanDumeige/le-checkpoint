@@ -2,6 +2,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -30,6 +31,7 @@ export class UserService {
 
   async findOne(id: number): Promise<UserEntity> {
     const user = await this.userDB.findOneBy({ id });
+    if (!user) throw new NotFoundException("L'utilisateur n'a pas été trouvé.");
     delete user.password;
     return user;
   }

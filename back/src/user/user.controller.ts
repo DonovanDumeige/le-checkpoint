@@ -36,6 +36,7 @@ import { v4 as uuidv4 } from 'uuid';
 import path = require('path');
 import { join } from 'path';
 import { AuthGuard } from '@nestjs/passport';
+import { TestDTO } from 'src/assets/models/dto/user/test.dto';
 
 export const storage = {
   storage: diskStorage({
@@ -59,38 +60,17 @@ export class UserController {
     private readonly config: ConfigService,
   ) {}
 
+  @Post('test')
+  test(@Body() dto: TestDTO) {
+    return {
+      message: "ceci n'est pas censé entre possible",
+      ...dto,
+    };
+  }
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Promise<UserEntity[]> {
     return this.userService.findAll();
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('index')
-  index(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-    @Query('username') username: string,
-  ): Observable<Pagination<UserInterface>> {
-    limit = limit > 100 ? 100 : limit;
-
-    if (username === null || username === undefined) {
-      return this.userService.paginate({
-        page: Number(page),
-        limit: Number(limit),
-        route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
-      });
-    } else {
-      return this.userService.paginateFilterByUsername(
-        {
-          page: Number(page),
-          limit: Number(limit),
-          // eslint-disable-next-line prettier/prettier
-          route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
-        },
-        { username },
-      );
-    }
   }
 
   @Get(':id')
@@ -129,6 +109,33 @@ export class UserController {
     return this.userService.updateUser(id, user, dto);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('index')
+  index(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query('username') username: string,
+  ): Observable<Pagination<UserInterface>> {
+    limit = limit > 100 ? 100 : limit;
+
+    if (username === null || username === undefined) {
+      return this.userService.paginate({
+        page: Number(page),
+        limit: Number(limit),
+        route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
+      });
+    } else {
+      return this.userService.paginateFilterByUsername(
+        {
+          page: Number(page),
+          limit: Number(limit),
+          // eslint-disable-next-line prettier/prettier
+          route: `http://localhost:${this.config.get('APP_PORT')}/api/user/index`,
+        },
+        { username },
+      );
+    }
+  }
   @UseGuards(JwtAuthGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', storage))

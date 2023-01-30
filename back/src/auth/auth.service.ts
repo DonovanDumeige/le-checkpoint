@@ -35,10 +35,7 @@ export class AuthService {
     } catch (e) {
       throw new ConflictException("Nom d'utilisateur ou mail déjà existant.");
     }
-    return {
-      id: user.id,
-      role: user.role,
-    };
+    return user;
   }
 
   async login(dto: LoginDTO) {
@@ -67,7 +64,7 @@ export class AuthService {
           username: user.username,
           role: user.role,
         };
-        const jwt = await this.jwtService.signAsync(payload);
+        const jwt = await this.jwtService.sign(payload);
         return {
           access_token: jwt,
         };

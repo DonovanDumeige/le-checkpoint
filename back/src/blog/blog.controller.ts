@@ -58,6 +58,29 @@ export class BlogController {
     return this.blogService.findAll();
   }
 
+  @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
+  @Put(':id')
+  updateOneArticle(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: EditArticleDTO,
+    @User() user,
+  ) {
+    return this.blogService.editArticle(id, data);
+  }
+
+  @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
+  @Delete(':id')
+  deleteOneArticle(@Param('id', ParseIntPipe) id: number) {
+    return this.blogService.deleteOneArticle(id);
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.blogService.findOnebyID(id);
+  }
+
   @Get('index')
   index(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
@@ -84,29 +107,6 @@ export class BlogController {
       page: page,
       route: url + '/user/' + userID,
     });
-  }
-
-  @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
-  @Put(':id')
-  updateOneArticle(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: EditArticleDTO,
-    @User() user,
-  ) {
-    return this.blogService.editArticle(id, data);
-  }
-
-  @HasRoles(Role.CHIEFEDITOR, Role.EDITOR, Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard, UserIsAuthor)
-  @Delete(':id')
-  deleteOneArticle(@Param('id', ParseIntPipe) id: number) {
-    return this.blogService.deleteOneArticle(id);
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.blogService.findOnebyID(id);
   }
 
   @UseGuards(JwtAuthGuard)

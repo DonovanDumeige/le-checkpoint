@@ -31,7 +31,7 @@ import { CreateArticleComponent } from './components/blog/create-article/create-
 import { WINDOW_PROVIDERS } from './window-token';
 import { MarkdownModule } from 'ngx-markdown';
 import { ViewBlogArticleComponent } from './components/blog/view-blog-article/view-blog-article.component';
-
+import {LayoutModule} from '@angular/cdk/layout';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +65,9 @@ import { ViewBlogArticleComponent } from './components/blog/view-blog-article/vi
     MatProgressBarModule,
     MatIconModule,
 
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+
+    LayoutModule,
 
 
 

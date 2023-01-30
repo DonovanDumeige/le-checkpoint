@@ -22,9 +22,8 @@ button {
   background-color: blue;
 }
 
-.toolbar{
-  background-color: black;
-  color: goldenrod;
+#toolbar{
+  background-color: #8e3a22;
 }
 
 .form-field{
@@ -40,9 +39,6 @@ button {
   background-color: transparent;
 }
 
-.toolbar{
-  background-color: #8e3a22;
-}
 .logo-container{
   text-decoration: none;
   display: inline-flex;
